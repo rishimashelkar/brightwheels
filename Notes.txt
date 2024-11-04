@@ -1,0 +1,29 @@
+For a larger-scale, production-ready ETL pipeline, consider these aspects:
+
+	1.	Scalability:
+	•	Use cloud storage solutions like Amazon S3 for incoming files, and a managed SQL database like Redshift for handling larger datasets.
+	•	Implement parallel data processing using Spark or a similar framework to handle multiple files and large datasets concurrently.
+
+	2.	Orchestration and Scheduling:
+	•	Use an orchestrator (like Airflow) to manage regular ETL job schedules and handle dependencies.
+	•	Design the pipeline to handle full data refreshes with each load, or utilize CDC (Change Data Capture) mechanisms if the source allows.
+	•	Depending on the use case, ETL runs could be event driven eg. File landing in s3/sftp triggers ETL
+
+	3.	Data Quality:
+	•	Validate incoming data against the target schema and log any inconsistencies or missing fields.
+	•	Track and report on data quality metrics, such as missing values or format inconsistencies.
+	•	Data metrics / counts should be reported and logged at each data hop.
+	•	Name, Address cleansing (using besting techniques), persistent unique ID's
+
+	4.	Monitoring and Alerting:
+	•	Set up logging and monitoring tools to track ETL performance and notify on failures.
+	•	Track processing times and system resource usage for optimization.
+
+	5.	Metadata Management:
+	•	Implement a metadata repository to track data lineage, file sources, load times, and any transformations applied.
+	• 	Instead of config.py, a more robuts metadata based approach should be used. Example, define each incoming files expected file name, format, layout.
+	. 	This metadata can also be defined for inter-depedencies between various feeds.
+
+	6.	Data Governance and Compliance:
+	•	Ensure data handling adheres to privacy laws and compliance standards like GDPR, CCPA.
+	•	Consider anonymizing or encrypting sensitive data fields.
